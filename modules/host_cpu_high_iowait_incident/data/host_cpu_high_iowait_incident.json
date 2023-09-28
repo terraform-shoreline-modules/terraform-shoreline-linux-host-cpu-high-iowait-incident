@@ -3,10 +3,6 @@
   "description": "A Host CPU high iowait incident occurs when the CPU iowait is greater than 10%, indicating that the system is disk or network bound. This can cause performance issues and may require investigation to identify the root cause and resolve the issue.",
   "params": [
     {
-      "name": "DURATION",
-      "value": ""
-    },
-    {
       "name": "COUNT",
       "value": ""
     },
@@ -15,19 +11,23 @@
       "value": ""
     },
     {
-      "name": "DAYS_MODIFIED",
-      "value": ""
-    },
-    {
       "name": "DIRECTORY_PATH",
       "value": ""
     },
     {
-      "name": "INTERFACE",
+      "name": "DAYS_MODIFIED",
+      "value": ""
+    },
+    {
+      "name": "DURATION",
       "value": ""
     },
     {
       "name": "DISK_NAME",
+      "value": ""
+    },
+    {
+      "name": "INTERFACE",
       "value": ""
     },
     {
@@ -124,7 +124,7 @@
       "name": "cell_13",
       "type": "OP_LANG",
       "enabled": true,
-      "content": "host | host_name=$HOST_NAME | invoke_tcpdump_script($DURATION, $PORT, $INTERFACE)"
+      "content": "host | host_name=$HOST_NAME | invoke_tcpdump_capture($PORT, $DURATION, $INTERFACE)"
     },
     {
       "name": "cell_14",
@@ -136,7 +136,7 @@
       "name": "cell_15",
       "type": "OP_LANG",
       "enabled": true,
-      "content": "host | host_name=$HOST_NAME | invoke_iowait_disk_io_check($DISK_NAME)"
+      "content": "host | host_name=$HOST_NAME | invoke_iowait_disk_io_threshold_check($DISK_NAME)"
     },
     {
       "name": "cell_16",
@@ -148,7 +148,7 @@
       "name": "cell_17",
       "type": "OP_LANG",
       "enabled": true,
-      "content": "host | host_name=$HOST_NAME | invoke_cleanup_log_files($DAYS_MODIFIED, $DIRECTORY_PATH)"
+      "content": "host | host_name=$HOST_NAME | invoke_cleanup_and_diskusage($DIRECTORY_PATH, $DAYS_MODIFIED)"
     }
   ]
 }
